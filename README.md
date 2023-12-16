@@ -1,4 +1,4 @@
-[![Docker Hub; drnxloc/nginx-php-fpm](https://img.shields.io/badge/docker%20hub-drnxloc%2Fnginx--php--fpm-blue.svg?&logo=docker&style=for-the-badge)](https://hub.docker.com/r/drnxloc/nginx-php-fpm/) [![](https://badges.weareopensource.me/docker/pulls/drnxloc/nginx-php-fpm?style=for-the-badge)](https://hub.docker.com/r/drnxloc/nginx-php-fpm/) [![](https://img.shields.io/docker/image-size/drnxloc/nginx-php-fpm/latest?style=for-the-badge)](https://hub.docker.com/r/drnxloc/nginx-php-fpm/) [![nginx 1.25.3](https://img.shields.io/badge/nginx-1.25.3-brightgreen.svg?&logo=nginx&logoColor=white&style=for-the-badge)](https://nginx.org/en/CHANGES) [![php 8.3.0](https://img.shields.io/badge/php--fpm-8.3.0-blue.svg?&logo=php&logoColor=white&style=for-the-badge)](https://secure.php.net/releases/8_3_0.php) [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?&style=for-the-badge)](https://github.com/drnxloc/nginx-php-fpm/blob/master/LICENSE)
+[![Docker Hub; drnxloc/nginx-php-fpm](https://img.shields.io/badge/docker%20hub-drnxloc%2Fnginx--php--fpm-blue.svg?&logo=docker&style=for-the-badge)](https://hub.docker.com/r/drnxloc/nginx-php-fpm/) [![](https://badges.weareopensource.me/docker/pulls/drnxloc/nginx-php-fpm?style=for-the-badge)](https://hub.docker.com/r/drnxloc/nginx-php-fpm/) [![](https://img.shields.io/docker/image-size/drnxloc/nginx-php-fpm/php82?style=for-the-badge)](https://hub.docker.com/r/drnxloc/nginx-php-fpm/) [![nginx 1.25.3](https://img.shields.io/badge/nginx-1.25.3-brightgreen.svg?&logo=nginx&logoColor=white&style=for-the-badge)](https://nginx.org/en/CHANGES) [![php 8.2.13](https://img.shields.io/badge/php--fpm-8.2.13-blue.svg?&logo=php&logoColor=white&style=for-the-badge)](https://secure.php.net/releases/8_3_0.php) [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?&style=for-the-badge)](https://github.com/drnxloc/nginx-php-fpm/blob/master/LICENSE)
 
 ## Introduction
 
@@ -25,13 +25,13 @@ $ cd nginx-php-fpm
 followed by
 
 ```
-$ docker build -t nginx-php-fpm:php83 . # PHP 8.3.x
+$ docker build -t nginx-php-fpm:php82 . # PHP 8.2.x
 ```
 
 ## Pulling from Docker Hub
 
 ```
-$ docker pull drnxloc/nginx-php-fpm:php83
+$ docker pull drnxloc/nginx-php-fpm:php82
 ```
 
 ## Running
@@ -39,7 +39,7 @@ $ docker pull drnxloc/nginx-php-fpm:php83
 To run the container:
 
 ```
-$ sudo docker run -dp 80:80 drnxloc/nginx-php-fpm:php83
+$ sudo docker run -dp 80:80 drnxloc/nginx-php-fpm:php82
 ```
 
 Default web root:
