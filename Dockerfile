@@ -1,6 +1,6 @@
 FROM debian:bullseye-slim
 
-LABEL maintainer="Colin Wilson colin@wyveo.com"
+LABEL maintainer="Loc Nguyen work@drnxloc.dev"
 
 # Let the container know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
