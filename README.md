@@ -25,13 +25,13 @@ $ cd nginx-php-fpm
 followed by
 
 ```
-$ docker build -t nginx-php-fpm:php83 . # PHP 8.3.x
+$ docker build -t nginx-php-fpm:php81 . # PHP 8.1.x
 ```
 
 ## Pulling from Docker Hub
 
 ```
-$ docker pull drnxloc/nginx-php-fpm:php83
+$ docker pull drnxloc/nginx-php-fpm:php81
 ```
 
 ## Running
@@ -39,7 +39,7 @@ $ docker pull drnxloc/nginx-php-fpm:php83
 To run the container:
 
 ```
-$ sudo docker run -dp 80:80 drnxloc/nginx-php-fpm:php83
+$ sudo docker run -dp 80:80 drnxloc/nginx-php-fpm:php81
 ```
 
 Default web root:
