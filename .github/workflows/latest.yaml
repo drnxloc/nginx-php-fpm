@@ -2,7 +2,7 @@ name: Publish PHP 8.3 (Latest) image to Docker Hub
 on:
   push:
     branches:
-      - "main"
+      - "master"
     paths-ignore:
       - "README.md"
       - "CHANGELOG.md"
