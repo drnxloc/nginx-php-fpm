@@ -4,11 +4,11 @@ LABEL maintainer="Loc Nguyen work@drnxloc.dev"
 
 # Let the container know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
-ENV NGINX_VERSION 1.25.3-1~bullseye
+ENV NGINX_VERSION 1.25.4-1~bullseye
 ENV php_conf /etc/php/8.3/fpm/php.ini
 ENV fpm_conf /etc/php/8.3/fpm/pool.d/www.conf
 ENV COMPOSER_VERSION 2.7.1
-ENV PHP_VERSION 8.3.2
+ENV PHP_VERSION 8.3.3
 
 # Install Basic Requirements
 RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
