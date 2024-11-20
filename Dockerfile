@@ -54,13 +54,13 @@ RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
         php${PHP_VERSION}-mbstring \
         php${PHP_VERSION}-curl \
         php${PHP_VERSION}-gd \
-        php${PHP_VERSION}-imagick \
+        php-imagick \
         php${PHP_VERSION}-mysql \
         php${PHP_VERSION}-zip \
         php${PHP_VERSION}-pgsql \
         php${PHP_VERSION}-intl \
         php${PHP_VERSION}-xml \
-        php${PHP_VERSION}-swoole \
+        php-swoole \
         php-pear \
         cron \
         && pecl -d php_suffix=${PHP_VERSION} install -o -f redis memcached \
