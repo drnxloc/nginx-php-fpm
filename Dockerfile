@@ -15,15 +15,10 @@ RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
         && set -x \
         && apt-get update \
         && apt-get install --no-install-recommends $buildDeps --no-install-suggests -q -y gnupg2 dirmngr wget apt-transport-https lsb-release ca-certificates debian-archive-keyring \
-        && \
-        curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \ 
-        | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null \
+        && curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null \
         && gpg --dry-run --quiet --no-keyring --import --import-options import-show /usr/share/keyrings/nginx-archive-keyring.gpg \
-        && echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] \
-        http://nginx.org/packages/mainline/debian `lsb_release -cs` nginx" \
-        | sudo tee /etc/apt/sources.list.d/nginx.list \
-        && echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" \
-        | sudo tee /etc/apt/preferences.d/99nginx \
+        && echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/mainline/debian `lsb_release -cs` nginx" | sudo tee /etc/apt/sources.list.d/nginx.list \
+        && echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" | sudo tee /etc/apt/preferences.d/99nginx \
         && wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
         && echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list \
         && apt-get update \
