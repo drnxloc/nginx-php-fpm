@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a Dockerfile to build a debian based container image running nginx and php-fpm 8.3.x / 8.2.x / 8.1.x & Composer.
+This is a Dockerfile to build a debian based container image running nginx and php-fpm 8.4.x / 8.3.x / 8.2.x / 8.1.x & Composer.
 
 ### Versioning
 
@@ -32,7 +32,7 @@ docker build -t nginx-php-fpm:php84 . # PHP 8.4.x
 ## Pulling from Docker Hub
 
 ```
-docker pull drnxloc/nginx-php-fpm:php83
+docker pull drnxloc/nginx-php-fpm:php84
 ```
 
 ## Running
@@ -40,7 +40,7 @@ docker pull drnxloc/nginx-php-fpm:php83
 To run the container:
 
 ```
-sudo docker run -dp 80:80 drnxloc/nginx-php-fpm:php83
+sudo docker run -dp 80:80 drnxloc/nginx-php-fpm:php84
 ```
 
 Default web root:
