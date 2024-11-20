@@ -59,8 +59,8 @@ RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
         php${PHP_VERSION}-pgsql \
         php${PHP_VERSION}-intl \
         php${PHP_VERSION}-xml \
-        php-swoole \
-        php-imagick \
+        php${PHP_VERSION}-swoole \
+        php${PHP_VERSION}-imagick \
         php-pear \
         cron \
         && pecl -d php_suffix=${PHP_VERSION} install -o -f redis memcached \
