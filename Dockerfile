@@ -8,7 +8,7 @@ ENV NGINX_VERSION 1.27.2-1~bullseye
 ENV PHP_VERSION 8.4
 ENV php_conf /etc/php/${PHP_VERSION}/fpm/php.ini
 ENV fpm_conf /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
-ENV COMPOSER_VERSION 2.7.7
+ENV COMPOSER_VERSION 2.8.3
 
 # Install Basic Requirements
 RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
@@ -54,16 +54,14 @@ RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
         php${PHP_VERSION}-mbstring \
         php${PHP_VERSION}-curl \
         php${PHP_VERSION}-gd \
-        php-imagick \
         php${PHP_VERSION}-mysql \
         php${PHP_VERSION}-zip \
         php${PHP_VERSION}-pgsql \
         php${PHP_VERSION}-intl \
         php${PHP_VERSION}-xml \
-        php-swoole \
         php-pear \
         cron \
-        && pecl -d php_suffix=${PHP_VERSION} install -o -f redis memcached \
+        && pecl -d php_suffix=${PHP_VERSION} install -o -f redis memcached swoole imagick \
         && mkdir -p /run/php \
         && pip install wheel \
         && pip install supervisor \
