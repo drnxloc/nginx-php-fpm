@@ -4,11 +4,11 @@ LABEL maintainer="Loc Nguyen work@drnxloc.dev"
 
 # Let the container know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
-ENV NGINX_VERSION 1.27.0-2~bullseye
-ENV php_conf /etc/php/8.3/fpm/php.ini
-ENV fpm_conf /etc/php/8.3/fpm/pool.d/www.conf
-ENV COMPOSER_VERSION 2.7.7
-ENV PHP_VERSION 8.3.10
+ENV NGINX_VERSION 1.27.2-1~bullseye
+ENV PHP_VERSION 8.4
+ENV php_conf /etc/php/${PHP_VERSION}/fpm/php.ini
+ENV fpm_conf /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
+ENV COMPOSER_VERSION 2.8.3
 
 # Install Basic Requirements
 RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
@@ -44,26 +44,26 @@ RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
         libmemcached11 \
         libmagickwand-dev \
         nginx=${NGINX_VERSION} \
-        php8.3-fpm \
-        php8.3-cli \
-        php8.3-bcmath \
-        php8.3-dev \
-        php8.3-common \
-        php8.3-opcache \
-        php8.3-readline \
-        php8.3-mbstring \
-        php8.3-curl \
-        php8.3-gd \
-        php8.3-imagick \
-        php8.3-mysql \
-        php8.3-zip \
-        php8.3-pgsql \
-        php8.3-intl \
-        php8.3-xml \
-        php8.3-swoole \
+        php${PHP_VERSION}-fpm \
+        php${PHP_VERSION}-cli \
+        php${PHP_VERSION}-bcmath \
+        php${PHP_VERSION}-dev \
+        php${PHP_VERSION}-common \
+        php${PHP_VERSION}-opcache \
+        php${PHP_VERSION}-readline \
+        php${PHP_VERSION}-mbstring \
+        php${PHP_VERSION}-curl \
+        php${PHP_VERSION}-gd \
+        php${PHP_VERSION}-mysql \
+        php${PHP_VERSION}-zip \
+        php${PHP_VERSION}-pgsql \
+        php${PHP_VERSION}-intl \
+        php${PHP_VERSION}-xml \
+        php${PHP_VERSION}-swoole \
+        php${PHP_VERSION}-imagick \
         php-pear \
         cron \
-        && pecl -d php_suffix=8.3 install -o -f redis memcached \
+        && pecl -d php_suffix=${PHP_VERSION} install -o -f redis memcached \
         && mkdir -p /run/php \
         && pip install wheel \
         && pip install supervisor \
@@ -75,7 +75,7 @@ RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
         && sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" ${php_conf} \
         && sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" ${php_conf} \
         && sed -i -e "s/variables_order = \"GPCS\"/variables_order = \"EGPCS\"/g" ${php_conf} \
-        && sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/8.3/fpm/php-fpm.conf \
+        && sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/${PHP_VERSION}/fpm/php-fpm.conf \
         && sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" ${fpm_conf} \
         && sed -i -e "s/pm.max_children = 5/pm.max_children = 4/g" ${fpm_conf} \
         && sed -i -e "s/pm.start_servers = 2/pm.start_servers = 3/g" ${fpm_conf} \
@@ -84,15 +84,15 @@ RUN buildDeps='curl gcc make autoconf libc-dev zlib1g-dev pkg-config' \
         && sed -i -e "s/pm.max_requests = 500/pm.max_requests = 200/g" ${fpm_conf} \
         && sed -i -e "s/www-data/nginx/g" ${fpm_conf} \
         && sed -i -e "s/^;clear_env = no$/clear_env = no/" ${fpm_conf} \
-        && echo "extension=redis.so" > /etc/php/8.3/mods-available/redis.ini \
-        && echo "extension=memcached.so" > /etc/php/8.3/mods-available/memcached.ini \
-        && echo "extension=imagick.so" > /etc/php/8.3/mods-available/imagick.ini \
-        && ln -sf /etc/php/8.3/mods-available/redis.ini /etc/php/8.3/fpm/conf.d/20-redis.ini \
-        && ln -sf /etc/php/8.3/mods-available/redis.ini /etc/php/8.3/cli/conf.d/20-redis.ini \
-        && ln -sf /etc/php/8.3/mods-available/memcached.ini /etc/php/8.3/fpm/conf.d/20-memcached.ini \
-        && ln -sf /etc/php/8.3/mods-available/memcached.ini /etc/php/8.3/cli/conf.d/20-memcached.ini \
-        && ln -sf /etc/php/8.3/mods-available/imagick.ini /etc/php/8.3/fpm/conf.d/20-imagick.ini \
-        && ln -sf /etc/php/8.3/mods-available/imagick.ini /etc/php/8.3/cli/conf.d/20-imagick.ini \
+        && echo "extension=redis.so" > /etc/php/${PHP_VERSION}/mods-available/redis.ini \
+        && echo "extension=memcached.so" > /etc/php/${PHP_VERSION}/mods-available/memcached.ini \
+        && echo "extension=imagick.so" > /etc/php/${PHP_VERSION}/mods-available/imagick.ini \
+        && ln -sf /etc/php/${PHP_VERSION}/mods-available/redis.ini /etc/php/${PHP_VERSION}/fpm/conf.d/20-redis.ini \
+        && ln -sf /etc/php/${PHP_VERSION}/mods-available/redis.ini /etc/php/${PHP_VERSION}/cli/conf.d/20-redis.ini \
+        && ln -sf /etc/php/${PHP_VERSION}/mods-available/memcached.ini /etc/php/${PHP_VERSION}/fpm/conf.d/20-memcached.ini \
+        && ln -sf /etc/php/${PHP_VERSION}/mods-available/memcached.ini /etc/php/${PHP_VERSION}/cli/conf.d/20-memcached.ini \
+        && ln -sf /etc/php/${PHP_VERSION}/mods-available/imagick.ini /etc/php/${PHP_VERSION}/fpm/conf.d/20-imagick.ini \
+        && ln -sf /etc/php/${PHP_VERSION}/mods-available/imagick.ini /etc/php/${PHP_VERSION}/cli/conf.d/20-imagick.ini \
         # Install Composer
         && curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
         && curl -o /tmp/composer-setup.sig https://composer.github.io/installer.sig \
