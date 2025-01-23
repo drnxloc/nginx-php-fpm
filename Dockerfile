@@ -3,9 +3,10 @@ FROM debian:bullseye-slim
 LABEL maintainer="Loc Nguyen work@drnxloc.dev"
 
 # Let the container know that there is no tty
+#PHP 8.4.3
 ENV DEBIAN_FRONTEND noninteractive
 ENV NGINX_VERSION 1.27.2-1~bullseye
-ENV PHP_VERSION 8.4
+ENV PHP_VERSION 8.4  
 ENV php_conf /etc/php/${PHP_VERSION}/fpm/php.ini
 ENV fpm_conf /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
 ENV COMPOSER_VERSION 2.8.4
