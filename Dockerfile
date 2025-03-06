@@ -5,7 +5,7 @@ LABEL maintainer="Loc Nguyen work@drnxloc.dev"
 # PHP 8.4.4
 # Let the container know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
-ENV NGINX_VERSION 1.27.2-1~bullseye
+ENV NGINX_VERSION 1.27.4-1~bullseye
 ENV PHP_VERSION 8.4  
 ENV php_conf /etc/php/${PHP_VERSION}/fpm/php.ini
 ENV fpm_conf /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
