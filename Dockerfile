@@ -4,12 +4,12 @@ LABEL maintainer="Loc Nguyen work@drnxloc.dev"
 
 # PHP 8.4.4
 # Let the container know that there is no tty
-ENV DEBIAN_FRONTEND noninteractive
-ENV NGINX_VERSION 1.27.4-1~bullseye
-ENV PHP_VERSION 8.4  
-ENV php_conf /etc/php/${PHP_VERSION}/fpm/php.ini
-ENV fpm_conf /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
-ENV COMPOSER_VERSION 2.8.6
+ENV DEBIAN_FRONTEND=noninteractive
+ENV NGINX_VERSION=1.27.4-1~bullseye
+ENV PHP_VERSION=8.4  
+ENV php_conf=/etc/php/${PHP_VERSION}/fpm/php.ini
+ENV fpm_conf=/etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
+ENV COMPOSER_VERSION=2.8.6
 
 # Install basic dependencies
 RUN apt-get update \
@@ -65,13 +65,12 @@ RUN apt-get update \
         php${PHP_VERSION}-pgsql \
         php${PHP_VERSION}-intl \
         php${PHP_VERSION}-xml \
-        # php${PHP_VERSION}-swoole \
         php${PHP_VERSION}-imagick \
         php-pear \
         cron
 
 # Install PHP extensions and create directories
-RUN pecl -d php_suffix=${PHP_VERSION} install -o -f redis memcached openswoole-25.2.0 uv \
+RUN pecl channel-update pecl.php.net && pecl -d php_suffix=${PHP_VERSION} install -o -f redis memcached openswoole-25.2.0 uv \
     && mkdir -p /run/php
 
 # Install Python packages
@@ -101,12 +100,15 @@ RUN echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d \
 RUN echo "extension=redis.so" > /etc/php/${PHP_VERSION}/mods-available/redis.ini \
     && echo "extension=memcached.so" > /etc/php/${PHP_VERSION}/mods-available/memcached.ini \
     && echo "extension=imagick.so" > /etc/php/${PHP_VERSION}/mods-available/imagick.ini \
+    && echo "extension=openswoole.so" > /etc/php/${PHP_VERSION}/mods-available/openswoole.ini \
     && ln -sf /etc/php/${PHP_VERSION}/mods-available/redis.ini /etc/php/${PHP_VERSION}/fpm/conf.d/20-redis.ini \
     && ln -sf /etc/php/${PHP_VERSION}/mods-available/redis.ini /etc/php/${PHP_VERSION}/cli/conf.d/20-redis.ini \
     && ln -sf /etc/php/${PHP_VERSION}/mods-available/memcached.ini /etc/php/${PHP_VERSION}/fpm/conf.d/20-memcached.ini \
     && ln -sf /etc/php/${PHP_VERSION}/mods-available/memcached.ini /etc/php/${PHP_VERSION}/cli/conf.d/20-memcached.ini \
     && ln -sf /etc/php/${PHP_VERSION}/mods-available/imagick.ini /etc/php/${PHP_VERSION}/fpm/conf.d/20-imagick.ini \
-    && ln -sf /etc/php/${PHP_VERSION}/mods-available/imagick.ini /etc/php/${PHP_VERSION}/cli/conf.d/20-imagick.ini
+    && ln -sf /etc/php/${PHP_VERSION}/mods-available/imagick.ini /etc/php/${PHP_VERSION}/cli/conf.d/20-imagick.ini \
+    && ln -sf /etc/php/${PHP_VERSION}/mods-available/openswoole.ini /etc/php/${PHP_VERSION}/fpm/conf.d/20-openswoole.ini \
+    && ln -sf /etc/php/${PHP_VERSION}/mods-available/openswoole.ini /etc/php/${PHP_VERSION}/cli/conf.d/20-openswoole.ini
 
 # Install Composer
 RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
@@ -116,7 +118,7 @@ RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
     && rm -rf /tmp/composer-setup.php
 
 # Set Node.js version
-ENV NODE_MAJOR 22
+ENV NODE_MAJOR=22
 
 # Install Node.js
 RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -q -y \
