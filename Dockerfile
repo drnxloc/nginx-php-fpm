@@ -43,11 +43,12 @@ RUN apt-get update \
         zip \
         unzip \
         python3-pip \
-        python-setuptools \
+        python3-setuptools \
         git \
         libmemcached-dev \
         libmemcached11 \
         libmagickwand-dev \
+        libuv1-dev \
         nginx=${NGINX_VERSION} \
         php${PHP_VERSION}-fpm \
         php${PHP_VERSION}-cli \
@@ -113,6 +114,27 @@ RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
     && php -r "if (hash('SHA384', file_get_contents('/tmp/composer-setup.php')) !== trim(file_get_contents('/tmp/composer-setup.sig'))) { unlink('/tmp/composer-setup.php'); echo 'Invalid installer' . PHP_EOL; exit(1); }" \
     && php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} \
     && rm -rf /tmp/composer-setup.php
+
+# Set Node.js version
+ENV NODE_MAJOR 22
+
+# Install Node.js
+RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -q -y \
+    ca-certificates gnupg2 && \
+    mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+    apt-get update && apt-get install --no-install-recommends --no-install-suggests -q -y nodejs
+
+# Optimize images
+RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -q -y \
+    jpegoptim \
+    optipng \
+    pngquant \
+    gifsicle \
+    webp \
+    libavif-bin \
+    && npm install -g svgo
 
 # Clean up
 RUN apt-get purge -y --auto-remove gcc make autoconf libc-dev zlib1g-dev pkg-config \
