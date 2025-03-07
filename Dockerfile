@@ -70,7 +70,7 @@ RUN apt-get update \
         cron
 
 # Install PHP extensions and create directories
-RUN pecl -d php_suffix=${PHP_VERSION} install -o -f redis memcached openswoole-25.2.0 \
+RUN pecl -d php_suffix=${PHP_VERSION} install -o -f redis memcached openswoole-25.2.0 uv \
     && mkdir -p /run/php
 
 # Install Python packages
@@ -115,7 +115,7 @@ RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
     && rm -rf /tmp/composer-setup.php
 
 # Clean up
-RUN apt-get purge -y --auto-remove curl gcc make autoconf libc-dev zlib1g-dev pkg-config \
+RUN apt-get purge -y --auto-remove gcc make autoconf libc-dev zlib1g-dev pkg-config \
     && apt-get clean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/pear
