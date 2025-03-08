@@ -11,6 +11,8 @@ ENV php_conf=/etc/php/${PHP_VERSION}/fpm/php.ini
 ENV fpm_conf=/etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
 ENV COMPOSER_VERSION=2.8.6
 
+RUN groupadd -g 33 www-data && useradd -u 33 -g www-data -s /usr/sbin/nologin www-data
+
 # Install basic dependencies
 RUN apt-get update \
     && apt-get install --no-install-recommends --no-install-suggests -q -y \
