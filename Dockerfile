@@ -18,18 +18,12 @@ RUN apt-get update \
         gnupg2 dirmngr wget apt-transport-https lsb-release ca-certificates
 
 # Add Nginx and PHP repositories
-RUN NGINX_GPGKEY=573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62; \
-    found=''; \
-    for server in \
-    ha.pool.sks-keyservers.net \
-    hkp://keyserver.ubuntu.com:80 \
-    hkp://p80.pool.sks-keyservers.net:80 \
-    pgp.mit.edu \
-    ; do \
-    echo "Fetching GPG key $NGINX_GPGKEY from $server"; \
-    apt-key adv --batch --keyserver "$server" --keyserver-options timeout=10 --recv-keys "$NGINX_GPGKEY" && found=yes && break; \
-    done; \
-    test -z "$found" && echo >&2 "error: failed to fetch GPG key $NGINX_GPGKEY" && exit 1; \
+RUN curl https://nginx.org/keys/nginx_signing.key \
+  | gpg --dearmor \
+  | tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null; \
+  echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] \
+  http://nginx.org/packages/mainline/debian $(lsb_release -cs) nginx" \
+  > /etc/apt/sources.list.d/nginx.list; \
     echo "deb http://nginx.org/packages/mainline/debian/ $(lsb_release -sc) nginx" >> /etc/apt/sources.list \
     && wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
     && echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
